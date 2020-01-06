@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.situ.store.catalog.dao.CatalogDao">
+
+	<!-- 目录搜索 -->
+	<sql id="catalog_base_select">
+		SELECT ROW_ID,PARENT_CATALOGID,CATALOG_INFO,CATALOG_NAME,ORDER_BY,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_CATALOG WHERE ACTIVE_FLAG = 1
+	</sql>
+	
+	<insert id="save" parameterType="Catalog" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
+		INSERT INTO TB_CATALOG (PARENT_CATALOGID,CATALOG_INFO,CATALOG_NAME,ORDER_BY,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{parentCatalogId},#{catalogInfo},#{catalogName},#{orderBy},#{activeFlag},#{createBy},#{createDate})
+	</insert>
+	
+	<select id="findByPage" resultType="Catalog">
+		<include refid="catalog_base_select"/>
+		<include refid="search_sql"></include>
+		ORDER BY ORDER_BY asc LIMIT #{firstResult},#{maxResults}
+	</select>
+	
+	<select id="findAll" resultType="Catalog">
+		<include refid="catalog_base_select"/>
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_CATALOG WHERE ACTIVE_FLAG =1
+		<include refid="search_sql"></include>
+	</select>
+	<select id="getAllCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_CATALOG
+	</select>
+	<sql id="search_sql">
+		<if test="searchCatalog!=null">
+			<if test="searchCatalog.parentCatalogId!=null">
+			AND PARENT_CATALOGID = #{searchCatalog.parentCatalogId}
+			</if>
+			<if test="searchCatalog.catalogInfo!=null">
+			AND CATALOG_INFO = #{searchCatalog.catalogInfo}
+			</if>
+			<if test="searchCatalog.catalogName!=null">
+			AND CATALOG_NAME = #{searchCatalog.catalogName}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="get" resultType="Catalog">
+		<include refid="catalog_base_select"/> AND ROW_ID = #{rowId}
+	</select>
+	
+	<update id="update" parameterType="Catalog">
+		UPDATE TB_CATALOG
+		<set>
+			<if test="parentCatalogId!=null">
+				PARENT_CATALOGID = #{parentCatalogId},
+			</if>
+			<if test="catalogInfo!=null">
+				CATALOG_INFO = #{catalogInfo},
+			</if>
+			<if test="catalogName!=null">
+				CATALOG_NAME = #{catalogName},
+			</if>
+			<if test="updateBy!=null">
+				UPDATE_BY = #{updateBy},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate},
+			</if>
+		</set>
+		WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="Catalog" >
+		UPDATE TB_CATALOG SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<select id="getByNameAndParentId" resultType="Catalog" parameterType="Catalog">
+		<include refid="catalog_base_select"/> AND CATALOG_NAME = #{catalogName} AND PARENT_CATALOGID = #{parentCatalogId}
+	</select>
+	
+	<select id="findByParentIdAndOrder" resultType="Catalog" parameterType="Catalog">
+		<include refid="catalog_base_select"/> AND PARENT_CATALOGID = #{parentCatalogId} AND ORDER_BY = #{orderBy}
+	</select>
+	<select id="findByParentId" resultType="Catalog" parameterType="Catalog">
+		<include refid="catalog_base_select"/> AND PARENT_CATALOGID = #{parentCatalogId}
+	</select>
+	
+	<update id="updateByOrder" parameterType="Catalog" >
+		UPDATE TB_CATALOG SET ORDER_BY=ORDER_BY+1 WHERE ORDER_BY > #{orderBy}
+	</update>
+
+</mapper>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.situ.store.product.dao.ProductDao">
+
+	<!-- 目录搜索 -->
+	<sql id="product_base_select">
+		SELECT ROW_ID,CATALOG_ID,CATALOG_NAME,PRODUCT_NAME,PRODUCT_NUM,PRODUCT_FILE,PRODUCT_PRICE,PRODUCT_COUNT,PUTAWAY_OR_SOLD_OUT,PRODUCT_INTRO,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM SELECT_PRODUCT_CATALOG WHERE ACTIVE_FLAG = 1
+	</sql>
+
+	<insert id="save" parameterType="Product" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
+		INSERT INTO TB_PRODUCT (CATALOG_ID,PRODUCT_NAME,PRODUCT_NUM,PRODUCT_FILE,PRODUCT_PRICE,PRODUCT_COUNT,PUTAWAY_OR_SOLD_OUT,PRODUCT_INTRO,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{catalogId},#{productName},#{productNum},#{productFile},#{productPrice},#{productCount},#{putawayOrSoldOut},#{productIntro},#{activeFlag},#{createBy},#{createDate})
+	</insert>
+	
+	<select id="findByPage" resultType="Product">
+		<include refid="product_base_select"/>
+		<include refid="search_sql"></include>
+		 LIMIT #{firstResult},#{maxResults}
+	</select>
+	
+	<select id="findAll" resultType="Product">
+		<include refid="product_base_select"/>
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_PRODUCT WHERE ACTIVE_FLAG =1
+		<include refid="search_sql"></include>
+	</select>
+	<sql id="search_sql">
+		<if test="searchProduct!=null">
+			<if test="searchProduct.catalogId!=null">
+			AND CATALOG_ID = #{searchProduct.catalogId}
+			</if>
+			<if test="searchProduct.productName!=null">
+			AND PRODUCT_NAME = #{searchProduct.productName}
+			</if>
+			<if test="searchProduct.productNum!=null">
+			AND PRODUCT_NUM = #{searchProduct.productNum}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="get" resultType="Product">
+		<include refid="product_base_select"/> AND ROW_ID = #{rowId}
+	</select>
+	
+	<update id="update" parameterType="Product">
+		UPDATE TB_PRODUCT
+		<set>
+			<if test="catalogId!=null">
+				CATALOG_ID = #{catalogId},
+			</if>
+			<if test="productName!=null">
+				PRODUCT_NAME = #{productName},
+			</if>
+			<if test="productNum!=null">
+				PRODUCT_NUM = #{productNum},
+			</if>
+			<if test="productFile!=null">
+				PRODUCT_FILE = #{productFile},
+			</if>
+			<if test="productPrice!=null">
+				PRODUCT_PRICE = #{productPrice},
+			</if>
+			<if test="productCount!=null">
+				PRODUCT_COUNT = #{productCount},
+			</if>
+			<if test="putawayOrSoldOut!=null">
+				PUTAWAY_OR_SOLD_OUT = #{putawayOrSoldOut},
+			</if>
+			<if test="productIntro!=null">
+				PRODUCT_INTRO = #{productIntro},
+			</if>
+			<if test="updateBy!=null">
+				UPDATE_BY = #{updateBy},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate},
+			</if>
+		</set>
+		WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="Product" >
+		UPDATE TB_PRODUCT SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<update id="doOut" parameterType="Product" >
+		UPDATE TB_PRODUCT SET PUTAWAY_OR_SOLD_OUT=0 WHERE ROW_ID = #{rowId}
+	</update>
+	<update id="doPut" parameterType="Product" >
+		UPDATE TB_PRODUCT SET PUTAWAY_OR_SOLD_OUT=1 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<select id="getByName" resultType="Product" parameterType="Product">
+		<include refid="product_base_select"/> AND PRODUCT_NAME = #{productName}
+	</select>
+	<select id="getByNum" resultType="Product" parameterType="Product">
+		<include refid="product_base_select"/> AND PRODUCT_NUM = #{productNum}
+	</select>
+
+</mapper>

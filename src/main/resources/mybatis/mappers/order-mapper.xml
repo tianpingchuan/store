@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.situ.store.order.dao.OrderDao">
+
+	<sql id="order_base_select">
+		SELECT ROW_ID,INDENT_CODE,PRODUCT_NUM,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_ORDER WHERE ACTIVE_FLAG = 1
+	</sql>
+	
+	<insert id="save" parameterType="Order" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
+		INSERT INTO TB_ORDER (INDENT_CODE,PRODUCT_NUM,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{indentCode},#{productNum},#{bayCount},#{totalPrices},#{activeFlag},#{createBy},#{createDate})
+	</insert>
+	
+	<select id="findByPage" resultType="Order">
+		<include refid="order_base_select"/>
+		<include refid="search_sql"></include>
+		 LIMIT #{firstResult},#{maxResults}
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_ORDER WHERE ACTIVE_FLAG =1
+		<include refid="search_sql"></include>
+	</select>
+	<sql id="search_sql">
+		<if test="searchOrder!=null">
+			<if test="searchOrder.indentCode!=null">
+			AND INDENT_CODE = #{searchOrder.indentCode}
+			</if>
+			<if test="searchOrder.productNum!=null">
+			AND PRODUCT_NUM = #{searchOrder.productNum}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="get" resultType="Order">
+		<include refid="order_base_select"/> AND ROW_ID = #{rowId}
+	</select>
+
+	<update id="update" parameterType="Order">
+		UPDATE TB_ORDER
+		<set>
+			<if test="indentCode!=null">
+				INDENT_CODE = #{indentCode},
+			</if>
+			<if test="productNum!=null">
+				PRODUCT_NUM = #{productNum},
+			</if>
+			<if test="bayCount!=null">
+				BAY_COUNT = #{bayCount},
+			</if>
+			<if test="totalPrices!=null">
+				TOTAL_PRICES = #{totalPrices},
+			</if>
+			<if test="updateBy!=null">
+				UPDATE_BY = #{updateBy},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate},
+			</if>
+		</set>
+		WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="Order" >
+		UPDATE TB_ORDER SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<select id="findAll" resultType="Order">
+		<include refid="order_base_select"/>
+	</select>
+	
+</mapper>

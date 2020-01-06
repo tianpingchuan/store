@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.situ.store.indent.dao.IndentDao">
+
+	<sql id="indent_base_select">
+		SELECT ROW_ID,INDENT_CODE,USER_ID,USER_NAME,TOTAL_PRICES,ADDRESS_ID,TRUE_ADDRESS,INDENT_STATE,PAY_WAY,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM SELECT_ADDRESS_USER_INDENT WHERE ACTIVE_FLAG = 1
+	</sql>
+	
+	<insert id="save" parameterType="Indent" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
+		INSERT INTO TB_INDENT (INDENT_CODE,USER_ID,TOTAL_PRICES,ADDRESS_ID,INDENT_STATE,PAY_WAY,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{indentCode},#{userId},#{totalPrices},#{addressId},#{indentState},#{payWay},#{activeFlag},#{createBy},#{createDate})
+	</insert>
+	
+	<select id="findByPage" resultType="Indent">
+		<include refid="indent_base_select"/>
+		<include refid="search_sql"></include>
+		 LIMIT #{firstResult},#{maxResults}
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_INDENT WHERE ACTIVE_FLAG =1
+		<include refid="search_sql"></include>
+	</select>
+	<sql id="search_sql">
+		<if test="searchIndent!=null">
+			<if test="searchIndent.indentCode!=null">
+			AND INDENT_CODE = #{searchIndent.indentCode}
+			</if>
+			<if test="searchIndent.userId!=null">
+			AND USER_ID = #{searchIndent.userId}
+			</if>
+			<if test="searchIndent.indentState!=null">
+			AND INDENT_STATE = #{searchIndent.indentState}
+			</if>
+		</if>
+	</sql>
+	
+	<select id="get" resultType="Indent">
+		<include refid="indent_base_select"/> AND ROW_ID = #{rowId}
+	</select>
+	
+	<update id="update" parameterType="Indent">
+		UPDATE TB_INDENT
+		<set>
+			<if test="indentCode!=null">
+				INDENT_CODE = #{indentCode},
+			</if>
+			<if test="userId!=null">
+				USER_ID = #{userId},
+			</if>
+			<if test="totalPrices!=null">
+				TOTAL_PRICES = #{totalPrices},
+			</if>
+			<if test="addressId!=null">
+				ADDRESS_ID = #{addressId},
+			</if>
+			<if test="indentState!=null">
+				INDENT_STATE = #{indentState},
+			</if>
+			<if test="payWay!=null">
+				PAY_WAY = #{payWay},
+			</if>
+			<if test="updateBy!=null">
+				UPDATE_BY = #{updateBy},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate},
+			</if>
+		</set>
+		WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="Indent" >
+		UPDATE TB_INDENT SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<select id="findAll" resultType="Indent">
+		<include refid="indent_base_select"/>
+	</select>
+	
+	<select id="getByCode" resultType="Indent" parameterType="Indent">
+		<include refid="indent_base_select"/> AND INDENT_CODE = #{indentCode}
+	</select>
+	
+</mapper>

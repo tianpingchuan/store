@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.situ.store.address.dao.AddressDao">
+
+	<!-- 目录搜索 -->
+	<sql id="address_base_select">
+		SELECT ROW_ID,USER_ID,USER_NAME,PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME,AREA_CODE,AREA_NAME,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM SELECT_ADDRESS_USER WHERE ACTIVE_FLAG = 1
+	</sql>
+
+	<select id="findAll" resultType="Address">
+		<include refid="address_base_select"/>
+	</select>
+	
+	<insert id="save" parameterType="Address" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
+		INSERT INTO TB_ADDRESS (USER_ID,PROVINCE_CODE,CITY_CODE,AREA_CODE,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{userId},#{provinceCode},#{cityCode},#{areaCode},#{trueAddress},#{postCode},#{userPhone},#{activeFlag},#{createBy},#{createDate})
+	</insert>
+	
+	<select id="findByPage" resultType="Address">
+		<include refid="address_base_select"/>
+		<include refid="search_sql"></include>
+		 LIMIT #{firstResult},#{maxResults}
+	</select>
+	
+	<select id="getCount" resultType="java.lang.Integer">
+		SELECT COUNT(ROW_ID) FROM TB_ADDRESS WHERE ACTIVE_FLAG =1
+		<include refid="search_sql"></include>
+	</select>
+	<sql id="search_sql">
+		<if test="searchAddress!=null">
+			<if test="searchAddress.userId!=null">
+			AND USER_ID = #{searchAddress.userId}
+			</if>
+			<if test="searchAddress.provinceCode!=null">
+			AND PROVINCE_CODE = #{searchAddress.provinceCode}
+			</if>
+		</if>
+	</sql>
+	<!-- 逻辑删除 -->
+	<update id="delete" parameterType="Address" >
+		UPDATE TB_ADDRESS SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+</mapper>
