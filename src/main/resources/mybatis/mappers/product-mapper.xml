@@ -24,6 +24,10 @@
 		<include refid="product_base_select"/>
 	</select>
 	
+	<select id="findByCatalogId" resultType="Product" parameterType="Product">
+		<include refid="product_base_select"/> AND CATALOG_ID = #{catalogId}
+	</select>
+	
 	<select id="getCount" resultType="java.lang.Integer">
 		SELECT COUNT(ROW_ID) FROM TB_PRODUCT WHERE ACTIVE_FLAG =1
 		<include refid="search_sql"></include>

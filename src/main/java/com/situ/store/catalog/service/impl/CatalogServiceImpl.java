@@ -105,4 +105,9 @@ public class CatalogServiceImpl implements Serializable, CatalogService {
 		return list;
 	}
 
+	@Override
+	public List<Catalog> findAllChild() {
+		return catalogDao.findAllChild();
+	}
+
 }

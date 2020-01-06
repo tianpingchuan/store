@@ -33,4 +33,6 @@ public interface ProductService {
 
 	Product findByNum(String productNum);
 
+	List<Product> findByCatalogId(Long rowId);
+
 }

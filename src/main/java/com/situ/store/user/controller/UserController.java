@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.situ.store.catalog.service.CatalogService;
+import com.situ.store.product.service.ProductService;
 import com.situ.store.user.domain.User;
 import com.situ.store.user.service.UserService;
 import com.situ.store.util.ConfigUtils;
@@ -37,12 +37,10 @@ public class UserController implements Serializable {
 	
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
-	private CatalogService catalogService;
+	private ProductService productService;
 	
 
-	
 	/**
 	 * @进管理员登录
 	 * @param modelAndView
@@ -322,13 +320,15 @@ public class UserController implements Serializable {
 	}
 	
 	/**
+	 * 查询目录商品
 	 * @param rowId
 	 * @return
 	 */
-	@RequestMapping("/findCatalog/{rowId}")
-	public ModelAndView findCatalog(ModelAndView modelAndView,@PathVariable("rowId")Long rowId) {
-		modelAndView.addObject("catalogList", catalogService.findAllByParentId(rowId));
-		modelAndView.setViewName("buyer/catalog");
+	@RequestMapping("/findProduct/{rowId}")
+	public ModelAndView findProduct(ModelAndView modelAndView,@PathVariable("rowId")Long rowId) {
+		modelAndView.addObject("catalogProduct", productService.findByCatalogId(rowId));
+		modelAndView.setViewName("buyer/catalog_product");
 		return modelAndView;
 	}
+
 }

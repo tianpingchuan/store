@@ -114,4 +114,9 @@ public class ProductServiceImpl implements ProductService, Serializable {
 		return productDao.getByNum(productNum);
 	}
 
+	@Override
+	public List<Product> findByCatalogId(Long rowId) {
+		return productDao.findByCatalogId(rowId);
+	}
+
 }

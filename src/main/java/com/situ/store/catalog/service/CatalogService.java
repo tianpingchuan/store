@@ -25,4 +25,6 @@ public interface CatalogService {
 
 	List<Catalog> findAllByParentId(long parentCatalogId);
 
+	List<Catalog> findAllChild();
+
 }

@@ -56,6 +56,7 @@ public class BuyerController implements Serializable {
 		
 		modelAndView.addObject("catalogParentList", catalogService.findAllByParentId(-1L));
 		modelAndView.addObject("productList", productService.findAll());
+		modelAndView.addObject("catalogChildList", catalogService.findAllChild());
 		modelAndView.setViewName(BUYER_INDEX);
 		return modelAndView;
 	}

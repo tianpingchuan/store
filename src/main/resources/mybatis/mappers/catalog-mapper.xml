@@ -23,6 +23,9 @@
 	<select id="findAll" resultType="Catalog">
 		<include refid="catalog_base_select"/>
 	</select>
+	<select id="findAllChild" resultType="Catalog">
+		<include refid="catalog_base_select"/> AND PARENT_CATALOGID != -1
+	</select>
 	
 	<select id="getCount" resultType="java.lang.Integer">
 		SELECT COUNT(ROW_ID) FROM TB_CATALOG WHERE ACTIVE_FLAG =1

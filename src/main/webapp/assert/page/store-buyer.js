@@ -13,7 +13,7 @@ $(document).ready(function(){
 					dataType:'json',
 					success:function(result){
 						if(result==1){
-							location.href = 'user/buyerindex';
+							location.href = '';
 						} else {
 							alert("登录失败");
 						}
@@ -53,7 +53,7 @@ $(document).ready(function(){
 					dataType:'json',
 					success:function(result){
 						if(result){
-							location.href = 'user/buyerindex';
+							location.href = '';
 						} else {
 							alert("注册失败");
 						}
@@ -63,20 +63,24 @@ $(document).ready(function(){
 		}
 	});
 	
-//	绑定目录超链接事件
-
-	$('.catalog').off('click').on('click',function(){
-		var rowId = $(this).attr("data-rowId");
-		alert("1");
-		$.ajax({
-			url : 'user/findCatalog/' + rowId,
-			dataType : 'html',
-			success : function(htmldata) {
-				$('#catalogList').html(htmldata);
-			}
+	findProduct(3);
+//		绑定目录超链接事件
+		$('html').off('click','.catalog').on('click','.catalog',function(){
+			var rowId = $(this).attr("data-rowId");
+			findProduct(rowId);
 		});
-	});
-	
+
+
 
 	
 });
+
+function findProduct(rowId) {
+	$.ajax({
+		url : 'user/findProduct/' + rowId,
+		dataType : 'html',
+		success : function(htmlData) {
+			 $('#product').html(htmlData);
+		}
+	});
+}

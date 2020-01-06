@@ -34,4 +34,6 @@ public interface CatalogDao {
 	List<Catalog> findByParentId(Long parentCatalogId);
 
 	void updateByOrder(Long orderBy);
+
+	List<Catalog> findAllChild();
 }

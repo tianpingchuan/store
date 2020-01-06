@@ -32,4 +32,6 @@ public interface ProductDao {
 
 	void doPut(Long rowId);
 
+	List<Product> findByCatalogId(Long rowId);
+
 }
