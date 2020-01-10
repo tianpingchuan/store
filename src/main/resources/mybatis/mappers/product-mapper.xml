@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="findAll" resultType="Product">
-		<include refid="product_base_select"/>
+		<include refid="product_base_select"/>  AND PUTAWAY_OR_SOLD_OUT = 1
 	</select>
 	
 	<select id="findByCatalogId" resultType="Product" parameterType="Product">

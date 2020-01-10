@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.type.Alias;
 
 import com.situ.store.base.domain.BaseClass;
+import com.situ.store.product.domain.Product;
 
 /**
  * 商品目录类
@@ -21,9 +22,18 @@ public class Catalog extends BaseClass implements Serializable {
 	private Long parentCatalogId;// 父级目录ID，最高级目录默认为-1，
 	private String catalogInfo;// 目录介绍
 	private String catalogName;// 目录名称
-	private Long orderBy;//树形结构排序
-	
-	private List<Catalog> catalogList;//存放一级目录下的二级目录
+	private Long orderBy;// 树形结构排序
+
+	private List<Catalog> catalogList;// 存放一级目录下的二级目录
+	private List<Product> productList;// 存放目录下的商品
+
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
 
 	public List<Catalog> getCatalogList() {
 		return catalogList;
@@ -70,7 +80,5 @@ public class Catalog extends BaseClass implements Serializable {
 		return "Catalog [parentCatalogId=" + parentCatalogId + ", catalogInfo=" + catalogInfo + ", catalogName="
 				+ catalogName + ", orderBy=" + orderBy + "]";
 	}
-
-
 
 }

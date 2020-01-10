@@ -24,6 +24,11 @@
 <!-- 树形结构 -->
 <link href="assert/vendor/jquery-treetable/css/jquery.treetable.css" rel="stylesheet" type="text/css" />
 <link href="assert/vendor/jquery-treetable/css/jquery.treetable.theme.default.css" rel="stylesheet" type="text/css" />
+
+<!-- include libraries(jQuery, bootstrap) -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<link href="assert/vendor/summernote/summernote-bs4.css" rel="stylesheet">
+
 </head>
 <body id="page-top">
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
@@ -216,4 +221,10 @@
 
 <script type="text/javascript" src="assert/vendor/jquery-treetable/js/jquery.treetable.js"></script>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+<!-- include summernote css/js -->
+<script src="assert/vendor/summernote/summernote-bs4.js"></script>
+<script src="assert/vendor/summernote/lang/summernote-zh-CN.js"></script>
 </html>

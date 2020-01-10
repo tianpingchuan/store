@@ -111,7 +111,7 @@ public class UserServiceImpl implements Serializable, UserService {
 	@Override
 	@PostConstruct
 	/**
-	 * @开局自动调用
+	 * @项目开启自动调用	保证在项目开启的时候至少有一个管理员
 	 * @当UserServiceImpl这个实例生成以后，会马上自动调用这个方法
 	 */
 	public void initAdmin() {
@@ -170,6 +170,18 @@ public class UserServiceImpl implements Serializable, UserService {
 	@Override
 	public List<User> findAll() {
 		return userDao.findAll();
+	}
+
+	@Override
+	public User findUserByCode(String userCode) {
+		return userDao.getByCode(userCode);
+	}
+
+	@Override
+	public void doUpdateLogin(User login) {
+		login.setEndIp("sys");
+		login.setEndLoginDate(new Date());
+		userDao.doUpdateLogin(login);
 	}
 
 

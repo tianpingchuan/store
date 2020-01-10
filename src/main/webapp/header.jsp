@@ -38,33 +38,33 @@
 	<div class="header" id="home">
 		<div class="container">
 			<ul>
-				<c:if test="${empty buyerUser}">
+				<c:if test="${empty userBuyer}">
 				<li><a href="#" data-toggle="modal" data-target="#myModal"><i
 						class="fa fa-unlock-alt" aria-hidden="true"></i> 登录 </a></li>
 				</c:if>
-				<c:if test="${empty buyerUser}">
+				<c:if test="${empty userBuyer}">
 				<li><a href="#" data-toggle="modal" data-target="#myModal2"><i
 						class="fa fa-pencil-square-o" aria-hidden="true"></i> 注册 </a></li>
 				</c:if>
 				
-				<c:if test="${!empty buyerUser}">
+				<c:if test="${!empty userBuyer}">
 				<li>
-					<a href="">
+					<a href="user/gopersonal">
 					<i class="glyphicon glyphicon-user" aria-hidden="true">
 					</i> 个人中心 </a>
 				</li>
 				</c:if>
-				<c:if test="${!empty buyerUser}">
+				<%-- <c:if test="${!empty userBuyer}">
 				<li>
 					<a href="">
 					<i class="glyphicon glyphicon-shopping-cart" aria-hidden="true">
 					</i> 购物车 </a>
 				</li>
-				</c:if>
+				</c:if> --%>
 				
-				<c:if test="${!empty buyerUser}">
+				<c:if test="${!empty userBuyer}">
 					<li><i class="glyphicon glyphicon-user" aria-hidden="true"></i> 
-						<a>欢迎：${buyerUser.userName}</a>
+						<a>欢迎：${userBuyer.userName}</a>
 					</li>
 					<li><i class="glyphicon glyphicon-log-out " aria-hidden="true"></i> 
 						<a href="user/loginoutbuyer" id="login_out">退出登录</a>

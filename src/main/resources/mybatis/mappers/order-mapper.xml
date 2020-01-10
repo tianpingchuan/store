@@ -5,12 +5,12 @@
 <mapper namespace="com.situ.store.order.dao.OrderDao">
 
 	<sql id="order_base_select">
-		SELECT ROW_ID,INDENT_CODE,PRODUCT_NUM,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_ORDER WHERE ACTIVE_FLAG = 1
+		SELECT ROW_ID,INDENT_CODE,PRODUCT_NUM,PRODUCT_INFO,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_ORDER WHERE ACTIVE_FLAG = 1
 	</sql>
 	
 	<insert id="save" parameterType="Order" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
-		INSERT INTO TB_ORDER (INDENT_CODE,PRODUCT_NUM,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
-		VALUES(#{indentCode},#{productNum},#{bayCount},#{totalPrices},#{activeFlag},#{createBy},#{createDate})
+		INSERT INTO TB_ORDER (INDENT_CODE,PRODUCT_NUM,PRODUCT_INFO,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{indentCode},#{productNum},#{productInfo},#{bayCount},#{totalPrices},#{activeFlag},#{createBy},#{createDate})
 	</insert>
 	
 	<select id="findByPage" resultType="Order">
@@ -47,6 +47,7 @@
 			<if test="productNum!=null">
 				PRODUCT_NUM = #{productNum},
 			</if>
+			
 			<if test="bayCount!=null">
 				BAY_COUNT = #{bayCount},
 			</if>

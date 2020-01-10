@@ -35,5 +35,3 @@
 <script>
 	$("#example-basic-expandable").treetable({ expandable: true, stringExpand:"展开",stringCollapse:"收起" });
 </script>
-<%-- 引入分页 --%>
-<%@ include file="/page.jsp"%>

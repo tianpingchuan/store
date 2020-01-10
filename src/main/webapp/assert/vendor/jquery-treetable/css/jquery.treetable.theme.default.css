@@ -1,10 +1,10 @@
 table.treetable {
-  border: 1px solid #888;
+ /*  border: 1px solid #888;
   border-collapse: collapse;
   font-size: .8em;
   line-height: 1;
   margin: .6em 0 1.8em 0;
-  width: 100%;
+  width: 100%; */
 }
 
 table.treetable caption {

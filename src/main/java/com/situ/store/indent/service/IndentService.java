@@ -23,4 +23,6 @@ public interface IndentService {
 
 	String checkCatalogName(String fieldId, String fieldValue);
 
+	List<Indent> findByIndentCode(String indentCode);
+
 }

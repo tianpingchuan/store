@@ -11,6 +11,7 @@ import com.situ.store.base.domain.PageData;
 import com.situ.store.catalog.dao.CatalogDao;
 import com.situ.store.catalog.domain.Catalog;
 import com.situ.store.catalog.service.CatalogService;
+import com.situ.store.product.dao.ProductDao;
 import com.situ.store.util.JSONUtils;
 import com.situ.store.util.PageUtils;
 
@@ -21,6 +22,8 @@ public class CatalogServiceImpl implements Serializable, CatalogService {
 
 	@Autowired
 	private CatalogDao catalogDao;
+	@Autowired
+	private ProductDao productDao;
 
 	@Override
 	public Long catalogSave(Catalog catalog, String createBy) {
@@ -107,7 +110,11 @@ public class CatalogServiceImpl implements Serializable, CatalogService {
 
 	@Override
 	public List<Catalog> findAllChild() {
-		return catalogDao.findAllChild();
+		List<Catalog> list = catalogDao.findAllChild();
+		for (Catalog catalog:list) {//遍历将一级目录下的二级目录放集合属性
+			catalog.setProductList(productDao.findByCatalogId(catalog.getRowId()));
+		}
+		return list;
 	}
 
 }

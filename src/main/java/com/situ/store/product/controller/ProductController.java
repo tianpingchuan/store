@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.situ.store.address.domain.TheAddress;
 import com.situ.store.catalog.domain.Catalog;
 import com.situ.store.catalog.service.CatalogService;
 import com.situ.store.product.domain.Product;
 import com.situ.store.product.service.ProductService;
 import com.situ.store.util.ContextUtils;
+import com.situ.store.util.MultipartUtils;
 import com.situ.store.util.PageUtils;
 
 @Controller
@@ -178,5 +178,11 @@ public class ProductController implements Serializable {
 		modelAndView.addObject("catalogProductsList", catalogProductsList);
 		modelAndView.setViewName("product/product_catalog");
 		return modelAndView;
+	}
+	@ResponseBody
+	@RequestMapping("/noteupload")
+	public String doUplaod4SummerNote(Product product,HttpServletRequest request) {
+		String realPath = request.getServletContext().getRealPath("/");
+		return MultipartUtils.writeFile(product.getMulitFile(),realPath);
 	}
 }

@@ -44,6 +44,7 @@ public class AdminController implements Serializable {
 //				满足用户登录状态
 //				有登陆用户将用户信息放入session
 				session.setAttribute(ConfigUtils.LOGIN_USER, user);
+				userService.doUpdateLogin(user);
 			}
 		}
 		if (session.getAttribute(ConfigUtils.LOGIN_USER) != null) {// 判断为登录状态

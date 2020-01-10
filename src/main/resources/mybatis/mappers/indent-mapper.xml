@@ -85,4 +85,8 @@
 		<include refid="indent_base_select"/> AND INDENT_CODE = #{indentCode}
 	</select>
 	
+	<select id="getListByCode" resultType="Indent" parameterType="Indent">
+		<include refid="indent_base_select"/> AND INDENT_CODE = #{indentCode}
+	</select>
+	
 </mapper>

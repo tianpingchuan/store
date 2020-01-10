@@ -24,6 +24,8 @@ public interface IndentDao {
 	
 	Indent get(Long rowId);
 
-	Indent getByCode(String IndentCode);
+	Indent getByCode(String indentCode);
+
+	List<Indent> getListByCode(String indentCode);
 
 }

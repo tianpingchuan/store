@@ -12,14 +12,16 @@ public interface AddressService {
 	List<Address> findByPage(Integer pageNo, Address searchAddress);
 
 	PageData buildPageData(Integer pageNo, Address searchAddress);
-//
-//	Address findOneById(Long rowId);
-//
-//	Integer doUpdate(Address address, String createBy);
-//
+
+	Address findOneById(Long rowId);
+
+	Integer doUpdate(Address address, String createBy);
+
 	Integer doDelete(Long rowId);
 
 	List<Address> findAll();
+
+	List<Address> findByUserId(Long rowId);
 
 
 }

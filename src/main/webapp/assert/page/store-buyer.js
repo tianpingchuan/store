@@ -1,5 +1,7 @@
 $(document).ready(function(){
-	
+//	paypal.minicart.render({
+// 		'action':'#'
+// 	});
 //	对表单绑定校验
 	$('#form_login').validationEngine('attach',{
 		onValidationComplete:function(form,status) {
@@ -63,24 +65,9 @@ $(document).ready(function(){
 		}
 	});
 	
-	findProduct(3);
-//		绑定目录超链接事件
-		$('html').off('click','.catalog').on('click','.catalog',function(){
-			var rowId = $(this).attr("data-rowId");
-			findProduct(rowId);
-		});
 
 
 
 	
 });
 
-function findProduct(rowId) {
-	$.ajax({
-		url : 'user/findProduct/' + rowId,
-		dataType : 'html',
-		success : function(htmlData) {
-			 $('#product').html(htmlData);
-		}
-	});
-}

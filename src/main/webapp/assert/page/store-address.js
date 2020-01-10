@@ -66,21 +66,40 @@ $(document).ready(function(){
 		$.ajax({
 	 		// role/goupdate/1
 	 		url : 'address/goupdate/' + rowId,
-	 		success : function(user) {
+	 		success : function(address) {
 //	 			if(true)	js代表true的
-	 			if(user) {
+	 			if(address) {
 	 	 			$('#modal_address').modal('show');
 //	 	 			清空所有的校验信息
 	 	 			$('.formError').remove();
-	 	 			var userName = user.userName;
-//	 	 			在需要进行唯一性校验的filed中加入data-skip属性并赋值
-	 	 			$('#userName').val(userName).attr('data-skip',userName);
-	 	 			var userCode = user.userCode;
-	 	 			$('#userCode').val(userCode).attr('data-skip',userCode);
-	 	 			$('#userCode').val(user.userCode);
-	 	 			$('#userPass').val(user.userPass);
-	 	 			$('#userPhone').val(user.userPhone);
-	 	 			$('#rowId').val(user.rowId);
+	 	 			$('#provinceCode').val(address.provinceCode);
+	 	 			var provinceCode = address.provinceCode;
+	 	 			$.ajax({
+	 	 				type:'post',
+	 	 		 		url : 'address/gochange1/' + provinceCode,
+	 	 		 		success : function(htmlData) {
+	 	 		 			if(htmlData) {
+	 	 		 				$('#cityCode').html(htmlData);
+	 	 		 				var cityCode = $('#cityCode').val();
+	 	 		 				$.ajax({
+	 	 		 					type:'post',
+	 	 		 			 		url : 'address/gochange2/' + cityCode,
+	 	 		 			 		success : function(htmlData) {
+	 	 		 			 			if(htmlData) {
+	 	 		 			 				$('#areaCode').html(htmlData);
+	 	 		 			 			}
+	 	 		 			 		}
+	 	 		 			 	});
+	 	 		 			}
+	 	 		 		}
+	 	 		 	});
+	 	 			
+	 	 			$('#cityCode').val(address.cityCode);
+	 	 			$('#areaCode').val(address.areaCode);
+	 	 			$('#trueAddress').val(address.trueAddress);
+	 	 			$('#postCode').val(address.postCode);
+	 	 			$('#userPhone').val(address.userPhone);
+	 	 			$('#rowId').val(address.rowId);
 	 	 			$('#action_info').html('修改');
 	 			}
 	 		}

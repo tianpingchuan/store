@@ -83,6 +83,10 @@
 		UPDATE TB_USER SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
 	</update>
 	
+	<update id="doUpdateLogin" parameterType="User">
+		UPDATE TB_USER SET END_IP=#{endIp}, END_LOGINDATE = #{endLoginDate} WHERE ROW_ID = #{rowId}
+	</update>
+	
 	<update id="doLock" parameterType="User" >
 		UPDATE TB_USER SET IF_LOCK=0 WHERE ROW_ID = #{rowId}
 	</update>

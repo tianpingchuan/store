@@ -116,6 +116,12 @@
 							<input type="text" class="form-control validate[required]" id="productIntro" name="productIntro">
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">产品附图</label>
+						<div class="col-sm-7">
+							<textarea id="summernote" name=""></textarea>
+						</div>
+					</div>
 					
 					<input type="hidden" id="rowId" name="rowId"/>
 			</div>

@@ -287,14 +287,14 @@
 	<!-- cart-js -->
 	<script src="assert/js/minicart.min.js"></script>
 <script>
-	// Mini Cart
-	paypal.minicart.render({
-		action: '#'
-	});
+//Mini Cart
+paypal.minicart.render({
+	action: '#'
+});
 
-	if (~window.location.search.indexOf('reset=true')) {
-		paypal.minicart.reset();
-	}
+if (~window.location.search.indexOf('reset=true')) {
+	paypal.minicart.reset();
+}	
 </script>
 
 	<!-- //cart-js --> 
@@ -325,6 +325,21 @@
 			event.preventDefault();
 			$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
 		});
+		
+		 $('#horizontalTab').easyResponsiveTabs({
+				type : 'default', //Types: default, vertical, accordion           
+				width : 'auto', //auto or any width like 600px
+				fit : true, // 100% fit in a container
+				closed : 'accordion', // Start closed if in accordion view
+				activate : function(event) { // Callback function if tab is switched
+					var $tab = $(this);
+					var $info = $('#tabInfo');
+					var $name = $('span', $info);
+					$name.text($tab.text());
+					$info.show();
+				}
+			});
+		 
 	});
 </script>
 <!-- here stars scrolling icon -->
@@ -345,10 +360,45 @@
 	</script>
 <!-- //here ends scrolling icon -->
 
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#verticalTab').easyResponsiveTabs({
+			type : 'vertical',
+			width : 'auto',
+			fit : true
+		});
+		// Mini Cart
+		$("#PPMiniCart").off('click').on('click','.minicart-submit',function(){
+			var cart = paypal.minicart.cart;
+			console.log(cart._items);
+			var data='';
+			$.each(cart._items,function(index,obj){
+    			console.log(obj._data);
+    			var _data = obj._data;
+    			console.log(_data.item_name);
+    			var list = 'cartList['+index+']';
+    			data+='&'+list+'.item_name='+_data.item_name;
+    			data+='&'+list+'.quantity='+_data.quantity;
+    		});
+			$.ajax({
+				url : 'cart/shopping',
+				data : data,
+				type : "POST", 
+				success : function(num) {
+					paypal.minicart.view.toggle();
+					paypal.minicart.reset();
+				}
+			});
+			alert("购买成功");
+		});
+			
+	});
+</script>
+
 <!-- for bootstrap working -->
 <script type="text/javascript" src="assert/js/bootstrap.js"></script>
-<script type="text/javascript" src="assert/page/store-buyer.js"></script>
 
 <script src="assert/vendor/jquery-validation/jquery.validationEngine-zh_CN.js"></script>
 <script src="assert/vendor/jquery-validation/jquery.validationEngine.js"></script>
+<script src="assert/js/easy-responsive-tabs.js"></script>
 </body>

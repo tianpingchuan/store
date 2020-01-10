@@ -45,19 +45,19 @@ public class AddressServiceImpl implements Serializable, AddressService {
 		return PageUtils.buildPageData(dataCount, pageNo);
 	}
 
-//	@Override
-//	public Address findOneById(Long rowId) {
-//		return addressDao.get(rowId);
-//	}
-//
-//	@Override
-//	public Integer doUpdate(Address address, String createBy) {
-//		address.setUpdateBy(createBy);
-//		address.setUpdateDate(new Date());
-//		addressDao.update(address);
-//		return 1;
-//	}
-//
+	@Override
+	public Address findOneById(Long rowId) {
+		return addressDao.get(rowId);
+	}
+
+	@Override
+	public Integer doUpdate(Address address, String createBy) {
+		address.setUpdateBy(createBy);
+		address.setUpdateDate(new Date());
+		addressDao.update(address);
+		return 1;
+	}
+
 	@Override
 	public Integer doDelete(Long rowId) {
 		addressDao.delete(rowId);
@@ -68,5 +68,11 @@ public class AddressServiceImpl implements Serializable, AddressService {
 	public List<Address> findAll() {
 		return addressDao.findAll();
 	}
+
+	@Override
+	public List<Address> findByUserId(Long rowId) {
+		return addressDao.findByUserId(rowId);
+	}
+
 
 }

@@ -50,7 +50,8 @@ public class BuyerController implements Serializable {
 			if (user != null) {// 判断有这个用户
 //				满足用户登录状态
 //				有登陆用户将用户信息放入session
-				session.setAttribute("buyerUser", user);
+				session.setAttribute(ConfigUtils.LOGIN_BUYER, user);
+				userService.doUpdateLogin(user);
 			}
 		}
 		

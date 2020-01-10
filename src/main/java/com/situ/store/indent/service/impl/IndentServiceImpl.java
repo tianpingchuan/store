@@ -77,5 +77,10 @@ public class IndentServiceImpl implements IndentService, Serializable {
 		return JSONUtils.buildValidationInfo(fieldId, bool);
 	}
 
+	@Override
+	public List<Indent> findByIndentCode(String indentCode) {
+		return indentDao.getListByCode(indentCode);
+	}
+
 
 }

@@ -13,6 +13,10 @@
 		<include refid="address_base_select"/>
 	</select>
 	
+	<select id="findByUserId" resultType="Address" parameterType="Address">
+		<include refid="address_base_select"/> AND USER_ID = #{userId}
+	</select>
+	
 	<insert id="save" parameterType="Address" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
 		INSERT INTO TB_ADDRESS (USER_ID,PROVINCE_CODE,CITY_CODE,AREA_CODE,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
 		VALUES(#{userId},#{provinceCode},#{cityCode},#{areaCode},#{trueAddress},#{postCode},#{userPhone},#{activeFlag},#{createBy},#{createDate})
@@ -41,6 +45,41 @@
 	<!-- 逻辑删除 -->
 	<update id="delete" parameterType="Address" >
 		UPDATE TB_ADDRESS SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<select id="get" resultType="Address">
+		<include refid="address_base_select"/> AND ROW_ID = #{rowId}
+	</select>
+
+	<update id="update" parameterType="Address">
+		UPDATE TB_ADDRESS
+		<set>
+			<if test="provinceCode!=null">
+				PROVINCE_CODE = #{provinceCode},
+			</if>
+			<if test="cityCode!=null">
+				CITY_CODE = #{cityCode},
+			</if>
+			<if test="areaCode!=null">
+				AREA_CODE = #{areaCode},
+			</if>
+			<if test="trueAddress!=null">
+				TRUE_ADDRESS = #{trueAddress},
+			</if>
+			<if test="postCode!=null">
+				POST_CODE = #{postCode},
+			</if>
+			<if test="userPhone!=null">
+				USER_PHONE = #{userPhone},
+			</if>
+			<if test="updateBy!=null">
+				UPDATE_BY = #{updateBy},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE = #{updateDate},
+			</if>
+		</set>
+		WHERE ROW_ID = #{rowId}
 	</update>
 	
 </mapper>

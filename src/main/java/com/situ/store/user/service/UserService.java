@@ -39,5 +39,13 @@ public interface UserService {
 	
 	List<User> findAll();
 
+	User findUserByCode(String userCode);
+
+	/**
+	 * 修改登录时间
+	 * @param login
+	 */
+	void doUpdateLogin(User login);
+
 
 }

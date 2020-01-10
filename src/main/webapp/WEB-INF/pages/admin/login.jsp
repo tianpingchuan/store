@@ -63,6 +63,14 @@
 				</label>
 				<input placeholder="Password" name="userPass" type="password" required="">
 			</div>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-unlock-alt"></i>
+					验证码（忽略大小写）
+				</label>
+				<img src="check/code" onclick="this.src='check/code'"/>
+				<input placeholder="验证码" id="code" type="text" required="">
+			</div>
 			<!-- checkbox -->
 			<div class="wthree-text">
 				<ul>
@@ -98,20 +106,23 @@
 	<!-- //effect js -->
 
 </body>
-<!-- <script type="text/javascript">
-$('#login').on('click',function(){
-	$.ajax({
-		type : 'post',
-		url : 'user/dologin',
-		data : $('#form-login').serialize(),
-		dataType : 'json',
-		success : function(result) {
-			if (result) {
-				alert("登录成功！！")
-				window.location.href="admin/index.jsp"; 
-			}
-		}
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#code').change(function(){
+		var code = $('#code').val();
+		$.ajax({
+			type:'post',
+	 		url : 'user/code/' + code,
+	 		success : function(result) {
+	 			if(result==1) {
+	 				/* 验证码正确 */
+	 			} else {
+	 				alert("验证码错误");
+	 				$('#code').val('');
+	 			}
+	 		}
+	 	});
 	});
 });
-</script> -->
+</script>
 </html>

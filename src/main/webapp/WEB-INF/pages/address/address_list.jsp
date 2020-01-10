@@ -32,6 +32,10 @@
 							<td>
 								<!-- data-XXX H5以后允许自定义元素的属性 -->
 								<a href="javascript:;" data-rowId="${address.rowId}" id="delete">删除</a>
+								<!-- 当用户登录个人中心时显示修改超链接 -->
+								<c:if test="${!empty user}">
+									<a href="javascript:;" data-rowId="${address.rowId}" id="update">修改</a>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>

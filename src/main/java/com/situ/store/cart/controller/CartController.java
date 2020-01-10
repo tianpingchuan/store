@@ -3,6 +3,8 @@ package com.situ.store.cart.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,11 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.situ.store.cart.domain.Cart;
+import com.situ.store.cart.domain.CartParam;
+import com.situ.store.cart.domain.Items;
 import com.situ.store.cart.service.CartService;
+import com.situ.store.indent.service.IndentService;
+import com.situ.store.order.service.OrderService;
 import com.situ.store.product.domain.Product;
 import com.situ.store.product.service.ProductService;
 import com.situ.store.user.domain.User;
 import com.situ.store.user.service.UserService;
+import com.situ.store.util.ConfigUtils;
 import com.situ.store.util.ContextUtils;
 import com.situ.store.util.PageUtils;
 
@@ -35,6 +42,10 @@ public class CartController implements Serializable {
 	private ProductService productService;
 	@Autowired
 	private CartService cartService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private IndentService indentService;
 	
 	
 	/**
@@ -115,5 +126,18 @@ public class CartController implements Serializable {
 	@RequestMapping("/dodelete/{rowId}")
 	public Integer doDelete(@PathVariable("rowId")Long rowId) {
 		return cartService.doDelete(rowId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/shopping")
+	public Integer shopping(CartParam cartList,HttpSession session) {
+		Object object = session.getAttribute(ConfigUtils.LOGIN_BUYER);
+		User user = (User)object;
+		int aa = 0;
+		if (user != null) {
+			List<Items> list = cartList.getCartList();
+			orderService.addOrder(user,list);
+		}
+		return 1;
 	}
 }

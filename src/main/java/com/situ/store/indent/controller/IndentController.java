@@ -128,5 +128,31 @@ public class IndentController implements Serializable {
 		return indentService.checkCatalogName(fieldId,fieldValue);
 	}
 	
+	/**
+	 * 跳转到用户订单页
+	 * @param rowId
+	 * @return
+	 */
+	@RequestMapping("/index/{rowId}")
+	public ModelAndView goPersonIndent(ModelAndView modelAndView,@PathVariable("rowId")Long rowId) {
+		List<Address> addressIndentList = addressService.findByUserId(rowId);
+		modelAndView.addObject("addressIndentList", addressIndentList);
+		modelAndView.setViewName("indent/person_index");
+		return modelAndView;
+	}
+	
+	/**
+	 * 跳转到用户订单页
+	 * @param rowId
+	 * @return
+	 */
+	@RequestMapping("/list/{indentCode}")
+	public ModelAndView findlist(ModelAndView modelAndView,@PathVariable("indentCode")String indentCode) {
+		System.out.println("进入controller");
+		modelAndView.addObject("indentOrderList", indentService.findByIndentCode(indentCode));
+		modelAndView.addObject("indentCode", indentCode);
+		modelAndView.setViewName("order/order_indent_list");
+		return modelAndView;
+	}
 	
 }

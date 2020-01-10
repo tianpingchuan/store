@@ -30,6 +30,7 @@ public class AddressController implements Serializable {
 	private static final String PAGE_LIST_ADDRESS = "address/address_list";
 	private static final String PAGE_CITY= "address/address_city";
 	private static final String PAGE_AREA= "address/address_area";
+	private static final String PAGE_PERSONAL_ADDRESS = "address/personal_address";
 	
 	@Autowired
 	private AddressService addressService;
@@ -106,7 +107,7 @@ public class AddressController implements Serializable {
 	@ResponseBody
 	@RequestMapping("/add")
 	/**
-	 * @目录新增
+	 * @地址新增
 	 * @param catalog
 	 * @return
 	 */
@@ -134,28 +135,28 @@ public class AddressController implements Serializable {
 		modelAndView.setViewName(PAGE_LIST_ADDRESS);
 		return modelAndView;
 	}
-//	/**
-//	 * @进修改
-//	 * @param rowId
-//	 * @return
-//	 */
-//	@ResponseBody
-//	@RequestMapping("/goupdate/{rowId}")
-//	public Address goupdate(@PathVariable("rowId")Long rowId) {
-//		return addressService.findOneById(rowId);
-//	}
-//	
-//	@ResponseBody
-//	@RequestMapping("/doupdate")
-//	/**
-//	 * 执行用户修改
-//	 * @param role
-//	 * @return
-//	 */
-//	public Integer doUpdate(Address address) {
-//		String createBy = ContextUtils.getCreateBy();
-//		return addressService.doUpdate(address,createBy);
-//	}
+	/**
+	 * @进修改
+	 * @param rowId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/goupdate/{rowId}")
+	public Address goupdate(@PathVariable("rowId")Long rowId) {
+		return addressService.findOneById(rowId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/doupdate")
+	/**
+	 * 执行用户修改
+	 * @param role
+	 * @return
+	 */
+	public Integer doUpdate(Address address) {
+		String createBy = ContextUtils.getCreateBy();
+		return addressService.doUpdate(address,createBy);
+	}
 	
 	/**
 	 * 执行删除
@@ -166,6 +167,19 @@ public class AddressController implements Serializable {
 	@RequestMapping("/dodelete/{rowId}")
 	public Integer doDelete(@PathVariable("rowId")Long rowId) {
 		return addressService.doDelete(rowId);
+	}
+	
+	/**
+	 * 进个人用户的地址管理
+	 * @param rowId
+	 * @return
+	 */
+	@RequestMapping("/index/{rowId}")
+	public ModelAndView goPersonalAddress(ModelAndView modelAndView,@PathVariable("rowId")Long rowId) {
+		List<TheAddress> theProvinceList = theAddressService.findAllProvince();
+		modelAndView.addObject("theProvinceList", theProvinceList);
+		modelAndView.setViewName(PAGE_PERSONAL_ADDRESS);
+		return modelAndView;
 	}
 	
 }

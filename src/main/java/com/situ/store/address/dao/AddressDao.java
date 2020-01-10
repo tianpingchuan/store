@@ -16,11 +16,13 @@ public interface AddressDao {
 
 	Integer getCount(@Param("searchAddress") Address searchAddress);
 	
-//	Address get(Long rowId);
+	Address get(Long rowId);
 
-//	void update(Address address);
+	void update(Address address);
 
 	void delete(Long rowId);
 
 	List<Address> findAll();
+	
+	List<Address> findByUserId(Long rowId);
 }

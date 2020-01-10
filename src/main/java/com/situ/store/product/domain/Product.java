@@ -29,6 +29,16 @@ public class Product extends BaseClass implements Serializable {
 	private Integer productCount;// 商品库存数量
 	private Integer putawayOrSoldOut;// 商品上下架状态1:上架，0：下架
 	private String productIntro;// 商品介绍
+	private CommonsMultipartFile mulitFile;
+	
+
+	public CommonsMultipartFile getMulitFile() {
+		return mulitFile;
+	}
+
+	public void setMulitFile(CommonsMultipartFile mulitFile) {
+		this.mulitFile = mulitFile;
+	}
 
 	public Long getCatalogId() {
 		return catalogId;

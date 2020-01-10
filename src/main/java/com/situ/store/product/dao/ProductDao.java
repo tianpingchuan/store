@@ -34,4 +34,6 @@ public interface ProductDao {
 
 	List<Product> findByCatalogId(Long rowId);
 
+	
+
 }

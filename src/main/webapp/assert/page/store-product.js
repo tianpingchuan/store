@@ -100,7 +100,7 @@ $(document).ready(function(){
 	 	 			$('#proFile').val(product.proFile);
 	 	 			$('#productPrice').val(product.productPrice);
 	 	 			$('#productCount').val(product.productCount);
-	 	 			$('#productIntro').val(product.productIntro);
+	 	 			$('#summernote').val(product.productIntro);
 	 	 			
 //	 	 			var catalogName = product.catalogName;
 ////	 	 			在需要进行唯一性校验的filed中加入data-skip属性并赋值
@@ -132,6 +132,43 @@ $(document).ready(function(){
 	 		}
 	 	});
     });
+	
+	
+	
+	$('#summernote').summernote({
+		lang : 'zh-CN', // default: 'en-US'
+		placeholder : 'Hello bootstrap 4',
+		tabsize : 2,
+		height : 100,
+		callbacks: {
+		    onImageUpload: function(files) {
+		      // upload image to server and create imgNode...
+		      //alert('图片上传触发此方法！!!!');
+		      var file = files[0];
+		      //console.log(file);
+		      //将需要上传的文件，封装成formData
+		      var formData = new FormData();
+		      formData.append('mulitFile',file);
+		      console.log(formData);
+		      $.ajax({
+		    	  type:'post',
+		    	  url:'product/noteupload',
+		    	  data:formData,
+		    	  cache: false, //不缓存
+					processData : false, // 告诉jQuery不要去处理发送的数据
+					contentType : false,// 告诉jQuery不要去设置Content-Type请求头
+					success:function(result){
+						console.log(result);
+						//将返回的文件路径封装成 img 的Dom对象
+						var $img = $('<img/>').attr('src',result);
+						//$img[0] 将一个jQuery对象转换成了DOM对象。
+						$('#summernote').summernote('insertNode', $img[0]);
+					}
+		      });
+		      //
+		    }
+		  }
+	});
 	
 });
 

@@ -110,7 +110,7 @@ public class UserController implements Serializable {
 		User login = userService.login(user);
 		
 //		判断是否需要自动登录
-		if(remember != null && Integer.parseInt(remember) == 1) {
+		if(remember != null && Integer.parseInt(remember) == 1 && login != null) {
 //			不建议将用户CODE和用户密码写入到Cookie中
 			String value = login.getUserCode()+":"+login.getRowId();
 			Cookie cookie = new Cookie(ConfigUtils.COOKIE_NAME,value);
@@ -130,6 +130,8 @@ public class UserController implements Serializable {
 		}
 		
 		if (login!=null) {
+			//保存最后登录时间
+			userService.doUpdateLogin(login);
 			modelAndView.addObject("user", login);
 			modelAndView.setViewName("admin/index");
 		} else {
@@ -289,7 +291,8 @@ public class UserController implements Serializable {
 		}
 		
 		if (login!=null) {
-			session.setAttribute("buyerUser", login);
+			userService.doUpdateLogin(login);
+			session.setAttribute(ConfigUtils.LOGIN_BUYER, login);
 			return 1;
 		} else {
 			return 0;
@@ -303,7 +306,7 @@ public class UserController implements Serializable {
 	 */
 	@RequestMapping("/loginoutbuyer")
 	public ModelAndView loginOutBuyer(ModelAndView modelAndView,HttpSession session) {
-		session.removeAttribute("buyerUser");
+		session.removeAttribute(ConfigUtils.LOGIN_BUYER);
 		modelAndView.setViewName(PAGE_GO_BUYER_INDEX);
 		return modelAndView;
 	}
@@ -329,6 +332,41 @@ public class UserController implements Serializable {
 		modelAndView.addObject("catalogProduct", productService.findByCatalogId(rowId));
 		modelAndView.setViewName("buyer/catalog_product");
 		return modelAndView;
+	}
+	
+	@RequestMapping("/gopersonal")
+	public ModelAndView goPersonal(ModelAndView modelAndView) {
+		modelAndView.setViewName("buyer/personal");
+		return modelAndView;
+	}
+	
+	/**
+	 * 查询个人信息
+	 * @param rowId
+	 * @return
+	 */
+	@RequestMapping("/index/{userCode}")
+	public ModelAndView goUserPerson(ModelAndView modelAndView,@PathVariable("userCode")String userCode) {
+		modelAndView.addObject("buyerUserPersonal", userService.findUserByCode(userCode));
+		modelAndView.setViewName("buyer/buyer_index");
+		return modelAndView;
+	}
+	
+	/**
+	 * 获取验证码
+	 * @param code
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/code/{code}")
+	public Integer checkCode(ModelAndView modelAndView,@PathVariable("code")String code,HttpServletRequest request) {
+		//判断验证码是否正确		
+		Object authcode = request.getSession().getAttribute("codeValidate");
+		String authcodeone=(String) authcode;
+		if(authcodeone.equalsIgnoreCase(code)) {
+			return 1;
+		}
+		return 2;
 	}
 
 }

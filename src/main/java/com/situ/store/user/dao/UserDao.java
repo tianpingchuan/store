@@ -51,4 +51,6 @@ public interface UserDao {
 	void doNoLock(Long rowId);
 
 	List<User> findAll();
+	
+	void doUpdateLogin(User user);
 }
