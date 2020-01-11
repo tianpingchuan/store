@@ -65,7 +65,35 @@ $(document).ready(function(){
 		}
 	});
 	
-
+//	绑定立即购买超链接事件
+//	$('#html').off('click','.productfind').on('click','.productfind',function(){
+	$('.productfind').off('click').on('click',function(){
+		var rowId = $(this).attr("data-rowId");
+		$.ajax({
+			url : 'product/findproduct/' + rowId,
+			dataType : 'json',
+			success : function(result) {
+				if (result == 1) {
+					location.href = 'single';
+				}
+			}
+		});
+	});
+	
+//	绑定目录超链接事件
+//	$('#html').off('click','.productfind').on('click','.productfind',function(){
+	$('.catalogproduct').off('click').on('click',function(){
+		var rowId = $(this).attr("data-rowId");
+		$.ajax({
+			url : 'catalog/findproduct/' + rowId,
+			dataType : 'json',
+			success : function(result) {
+				if (result == 1) {
+					location.href = 'mens';
+				}
+			}
+		});
+	});
 
 
 	

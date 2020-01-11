@@ -150,7 +150,7 @@
 												<img src=${product.productFile } alt="" class="pro-image-back">
 												<div class="men-cart-pro">
 													<div class="inner-men-cart-pro">
-														<a href="single.html" class="link-product-add-cart">立即购买</a>
+														<a  href="javascript:;" data-rowId="${product.rowId}" class="productfind link-product-add-cart">立即购买</a>
 													</div>
 												</div>
 												<span class="product-new-top">New</span>
@@ -221,7 +221,7 @@
 								<img src="${product.productFile}" alt="" class="pro-image-front"> <img src="${product.productFile}" alt="" class="pro-image-back">
 								<div class="men-cart-pro">
 									<div class="inner-men-cart-pro">
-										<a href="single" class="link-product-add-cart">立即购买</a>
+										<a  href="javascript:;" data-rowId="${product.rowId}" class="productfind link-product-add-cart">立即购买</a>
 									</div>
 								</div>
 								<span class="product-new-top">New</span>
@@ -269,5 +269,5 @@
 <%@include file="/footer.jsp"%>
 <!-- //footer -->
 
-<script type="text/javascript" src="assert/page/store-buyer.js"></script>
+
 </html>

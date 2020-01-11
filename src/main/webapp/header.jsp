@@ -180,7 +180,7 @@
 												<ul class="multi-column-dropdown">
 													<c:if test="${!empty catalog.catalogList}">
 													<c:forEach items="${catalog.catalogList}" var="catalog1">
-														<li><a href="#">${catalog1.catalogName} </a></li>
+														<li><a href="javascript:;" data-rowId="${catalog1.rowId}" class="catalogproduct">${catalog1.catalogName} </a></li>
 													</c:forEach>
 													</c:if>	
 												</ul>

@@ -3,6 +3,8 @@ package com.situ.store.catalog.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.situ.store.catalog.domain.Catalog;
 import com.situ.store.catalog.service.CatalogService;
+import com.situ.store.product.domain.Product;
+import com.situ.store.product.service.ProductService;
 import com.situ.store.util.ContextUtils;
 import com.situ.store.util.PageUtils;
 
@@ -28,6 +32,8 @@ public class CatalogController implements Serializable {
 	
 	@Autowired
 	private CatalogService catalogService;
+	@Autowired
+	private ProductService productService;
 	
 	/**
 	 * @进用户管理首页
@@ -139,5 +145,22 @@ public class CatalogController implements Serializable {
 	@RequestMapping("/checkCatalogName")
 	public String checkUserName(String fieldId,String fieldValue,Long parentCatalogId) {
 		return catalogService.checkCatalogName(fieldId,fieldValue,parentCatalogId);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/findproduct/{rowId}")
+	/**
+	 * 跳转到目录商品详情,将商品信息加到session域
+	 * @param modelAndView
+	 * @param rowId
+	 * @return
+	 */
+	public Integer goProduct(HttpSession session,@PathVariable("rowId") Long rowId) {
+		List<Product> productList = productService.findByCatalogId(rowId);
+		if(productList != null) {
+			session.setAttribute("productCatalog", productList);
+			return 1;
+		}
+		return 0;
 	}
 }

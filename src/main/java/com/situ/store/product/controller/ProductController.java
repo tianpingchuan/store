@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +174,7 @@ public class ProductController implements Serializable {
 	 * @return
 	 */
 	@RequestMapping("/gochange/{parentCatalogId}")
-	public ModelAndView goSelectcity2(ModelAndView modelAndView,@PathVariable Long parentCatalogId) {
+	public ModelAndView goSelectcity2(ModelAndView modelAndView,@PathVariable("parentCatalogId") Long parentCatalogId) {
 		List<Catalog> catalogProductsList = catalogService.findAllByParentId(parentCatalogId);
 		modelAndView.addObject("catalogProductsList", catalogProductsList);
 		modelAndView.setViewName("product/product_catalog");
@@ -185,4 +186,22 @@ public class ProductController implements Serializable {
 		String realPath = request.getServletContext().getRealPath("/");
 		return MultipartUtils.writeFile(product.getMulitFile(),realPath);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/findproduct/{rowId}")
+	/**
+	 * 跳转到商品详情,将商品信息加到session域
+	 * @param modelAndView
+	 * @param rowId
+	 * @return
+	 */
+	public Integer goProductInfo(HttpSession session,@PathVariable("rowId") Long rowId) {
+		Product product = productService.findOneById(rowId);
+		if(product != null) {
+			session.setAttribute("productInfo", product);
+			return 1;
+		}
+		return 0;
+	}
+	
 }

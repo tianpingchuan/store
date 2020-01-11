@@ -401,4 +401,5 @@ if (~window.location.search.indexOf('reset=true')) {
 <script src="assert/vendor/jquery-validation/jquery.validationEngine-zh_CN.js"></script>
 <script src="assert/vendor/jquery-validation/jquery.validationEngine.js"></script>
 <script src="assert/js/easy-responsive-tabs.js"></script>
+<script type="text/javascript" src="assert/page/store-buyer.js"></script>
 </body>

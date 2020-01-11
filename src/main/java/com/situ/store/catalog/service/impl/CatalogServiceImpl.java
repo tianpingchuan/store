@@ -111,7 +111,7 @@ public class CatalogServiceImpl implements Serializable, CatalogService {
 	@Override
 	public List<Catalog> findAllChild() {
 		List<Catalog> list = catalogDao.findAllChild();
-		for (Catalog catalog:list) {//遍历将一级目录下的二级目录放集合属性
+		for (Catalog catalog:list) {//遍历将一级目录下的商品信息放集合属性
 			catalog.setProductList(productDao.findByCatalogId(catalog.getRowId()));
 		}
 		return list;

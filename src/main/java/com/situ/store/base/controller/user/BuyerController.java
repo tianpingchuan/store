@@ -23,7 +23,6 @@ public class BuyerController implements Serializable {
 
 	private static final String BUYER_INDEX = "buyer/index_user";
 	private static final String GO_MENS = "buyer/mens";
-	private static final String GO_WOMENS = "buyer/womens";
 	private static final String GO_SINGLE = "buyer/single";
 	
 	@Autowired
@@ -69,20 +68,13 @@ public class BuyerController implements Serializable {
 	 */
 	@RequestMapping("/mens")
 	public ModelAndView goMens(ModelAndView modelAndView) {
+		modelAndView.addObject("catalogParentList", catalogService.findAllByParentId(-1L));
+		modelAndView.addObject("productList", productService.findAll());
+		modelAndView.addObject("catalogChildList", catalogService.findAllChild());
 		modelAndView.setViewName(GO_MENS);
 		return modelAndView;
 	}
 	
-	/**
-	 * @进女装页面
-	 * @param modelAndView
-	 * @return
-	 */
-	@RequestMapping("/womens")
-	public ModelAndView goWomens(ModelAndView modelAndView) {
-		modelAndView.setViewName(GO_WOMENS);
-		return modelAndView;
-	}
 	
 	/**
 	 * @进购买页面
@@ -91,6 +83,9 @@ public class BuyerController implements Serializable {
 	 */
 	@RequestMapping("/single")
 	public ModelAndView goSingle(ModelAndView modelAndView) {
+		modelAndView.addObject("catalogParentList", catalogService.findAllByParentId(-1L));
+		modelAndView.addObject("productList", productService.findAll());
+		modelAndView.addObject("catalogChildList", catalogService.findAllChild());
 		modelAndView.setViewName(GO_SINGLE);
 		return modelAndView;
 	}
