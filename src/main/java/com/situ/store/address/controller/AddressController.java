@@ -170,6 +170,17 @@ public class AddressController implements Serializable {
 	}
 	
 	/**
+	 * 设置默认地址
+	 * @param rowId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/dodefault/{rowId}")
+	public Integer doDefault(@PathVariable("rowId")Long rowId) {
+		return addressService.doDefault(rowId);
+	}
+	
+	/**
 	 * 进个人用户的地址管理
 	 * @param rowId
 	 * @return

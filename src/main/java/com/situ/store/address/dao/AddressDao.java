@@ -25,4 +25,10 @@ public interface AddressDao {
 	List<Address> findAll();
 	
 	List<Address> findByUserId(Long rowId);
+
+	void doDefault(Long rowId);
+
+	void doDefaultOthers(Address address);
+
+	Address findDefault(Long rowId);
 }

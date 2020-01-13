@@ -8,6 +8,7 @@
 				<tr>
 					<th scope="col">#</th>
 					<th scope="col">用户名称</th>
+					<th scope="col">是否为默认地址</th>
 					<th scope="col">省名称</th>
 					<th scope="col">市名称</th>
 					<th scope="col">县名称</th>
@@ -23,6 +24,9 @@
 						<tr>
 							<th scope="row">${status.index+1}</th>
 							<td>${address.userName}</td>
+							<td>
+								${address.ifDefault==0?'是':'否'}
+							</td>
 							<td>${address.provinceName}</td>
 							<td>${address.cityName}</td>
 							<td>${address.areaName}</td>
@@ -33,8 +37,9 @@
 								<!-- data-XXX H5以后允许自定义元素的属性 -->
 								<a href="javascript:;" data-rowId="${address.rowId}" id="delete">删除</a>
 								<!-- 当用户登录个人中心时显示修改超链接 -->
-								<c:if test="${!empty user}">
+								<c:if test="${!empty userBuyer}">
 									<a href="javascript:;" data-rowId="${address.rowId}" id="update">修改</a>
+									<a href="javascript:;" data-rowId="${address.rowId}" id="default">${address.ifDefault==0?'':'设为默认'}</a>
 								</c:if>
 							</td>
 						</tr>

@@ -108,14 +108,15 @@ public class OrderServiceImpl implements OrderService, Serializable {
 			Long price =(long) productPrice * quantity;
 			totalPrices += price;
 			
-//			查询用户的地址信息
-			List<Address> addressList = addressDao.findByUserId(user.getRowId());
+//			查询用户的默认地址信息
+//			List<Address> addressList = addressDao.findByUserId(user.getRowId());
+			Address address = addressDao.findDefault(user.getRowId());
 			
 			indent.setIndentCode(uuid);
 			indent.setUserId(user.getRowId());
 			indent.setTotalPrices(price);
-			if(addressList != null) {//判断查询地址是否为空，不为空将第一个地址的id赋给订单地址
-				indent.setAddressId(addressList.get(0).getRowId());
+			if(address != null) {//判断查询地址是否为空，不为空将第一个地址的id赋给订单地址
+				indent.setAddressId(address.getRowId());
 			} else {
 				indent.setAddressId(null);
 			}

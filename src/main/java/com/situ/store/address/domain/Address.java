@@ -19,6 +19,7 @@ public class Address extends BaseClass implements Serializable {
 
 	private Long userId;// 用户ID
 	private String userName;// 用户姓名
+	private Integer ifDefault;// 是否默认：0：默认；1：不默认
 	private Long provinceCode;// 省（直辖市）CODE
 	private String provinceName;// 省名称
 	private Long cityCode;// 市CODE
@@ -35,6 +36,10 @@ public class Address extends BaseClass implements Serializable {
 
 	public String getUserName() {
 		return userName;
+	}
+
+	public Integer getIfDefault() {
+		return ifDefault;
 	}
 
 	public Long getProvinceCode() {
@@ -81,6 +86,10 @@ public class Address extends BaseClass implements Serializable {
 		this.userName = userName;
 	}
 
+	public void setIfDefault(Integer ifDefault) {
+		this.ifDefault = ifDefault;
+	}
+
 	public void setProvinceCode(Long provinceCode) {
 		this.provinceCode = provinceCode;
 	}
@@ -119,10 +128,10 @@ public class Address extends BaseClass implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Address [userId=" + userId + ", userName=" + userName + ", provinceCode=" + provinceCode
-				+ ", provinceName=" + provinceName + ", cityCode=" + cityCode + ", cityName=" + cityName + ", areaCode="
-				+ areaCode + ", areaName=" + areaName + ", trueAddress=" + trueAddress + ", postCode=" + postCode
-				+ ", userPhone=" + userPhone + "]";
+		return "Address [userId=" + userId + ", userName=" + userName + ", ifDefault=" + ifDefault + ", provinceCode="
+				+ provinceCode + ", provinceName=" + provinceName + ", cityCode=" + cityCode + ", cityName=" + cityName
+				+ ", areaCode=" + areaCode + ", areaName=" + areaName + ", trueAddress=" + trueAddress + ", postCode="
+				+ postCode + ", userPhone=" + userPhone + "]";
 	}
 
 }

@@ -88,8 +88,7 @@
 		<!-- 左侧 菜单开始  -->
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav" id="left_menu">
-			<li class="nav-item active"><a class="nav-link" href="index.jsp"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>系统首页</span>
-			</a></li>
+			
 			<li class="nav-item"><a class="nav-link" href="user/index"> <i class="fas fa-fw fa-table"></i> <span>用户管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="catalog/index"> <i class="fas fa-fw fa-table"></i> <span>目录管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="product/index"> <i class="fas fa-fw fa-table"></i> <span>商品管理</span></a></li>
@@ -97,7 +96,6 @@
 			<li class="nav-item"><a class="nav-link" href="indent/index"> <i class="fas fa-fw fa-chart-area"></i> <span>订单管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="order/index"> <i class="fas fa-fw fa-chart-area"></i> <span>订单列表管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="cart/index"> <i class="fas fa-fw fa-chart-area"></i> <span>购物车管理</span></a></li>
-			<li class="nav-item"><a class="nav-link" href=""> <i class="fas fa-fw fa-table"></i> <span>Tables</span></a></li>
 		</ul>
 		<!-- 左侧 菜单结束  -->
 		<!-- 主页面开始  -->

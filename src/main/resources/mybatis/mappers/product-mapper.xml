@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="findByCatalogId" resultType="Product" parameterType="Product">
-		<include refid="product_base_select"/> AND CATALOG_ID = #{catalogId}
+		<include refid="product_base_select"/> AND CATALOG_ID = #{catalogId}  AND PUTAWAY_OR_SOLD_OUT = 1
 	</select>
 	
 	<select id="getCount" resultType="java.lang.Integer">

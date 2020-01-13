@@ -17,7 +17,6 @@ import com.situ.store.cart.domain.Cart;
 import com.situ.store.cart.domain.CartParam;
 import com.situ.store.cart.domain.Items;
 import com.situ.store.cart.service.CartService;
-import com.situ.store.indent.service.IndentService;
 import com.situ.store.order.service.OrderService;
 import com.situ.store.product.domain.Product;
 import com.situ.store.product.service.ProductService;
@@ -44,8 +43,7 @@ public class CartController implements Serializable {
 	private CartService cartService;
 	@Autowired
 	private OrderService orderService;
-	@Autowired
-	private IndentService indentService;
+
 	
 	
 	/**
@@ -133,7 +131,6 @@ public class CartController implements Serializable {
 	public Integer shopping(CartParam cartList,HttpSession session) {
 		Object object = session.getAttribute(ConfigUtils.LOGIN_BUYER);
 		User user = (User)object;
-		int aa = 0;
 		if (user != null) {
 			List<Items> list = cartList.getCartList();
 			orderService.addOrder(user,list);

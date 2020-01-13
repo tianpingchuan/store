@@ -78,12 +78,10 @@
 		<!-- 左侧 菜单开始  -->
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav" id="left_menu">
-			<li class="nav-item active"><a class="nav-link" href="index"> <i class="fas fa-fw fa-tachometer-alt"></i> <span>系统首页</span>
-			</a></li>
+			
 			<li class="nav-item"><a class="nav-link" href="user/index/${userBuyer.userCode}"> <i class="fas fa-fw fa-table"></i> <span>个人信息</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="address/index/${userBuyer.rowId}"> <i class="fas fa-fw fa-chart-area"></i> <span>地址管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="indent/index/${userBuyer.rowId}"> <i class="fas fa-fw fa-chart-area"></i> <span>订单管理</span></a></li>
-			<li class="nav-item"><a class="nav-link" href=""> <i class="fas fa-fw fa-table"></i> <span>Tables</span></a></li>
 		</ul>
 		<!-- 左侧 菜单结束  -->
 		<!-- 主页面开始  -->

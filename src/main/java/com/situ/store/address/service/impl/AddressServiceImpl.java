@@ -24,6 +24,7 @@ public class AddressServiceImpl implements Serializable, AddressService {
 	@Override
 	public Long addressSave(Address address, String createBy) {
 		address.setActiveFlag(1);
+		address.setIfDefault(1);
 		address.setCreateBy(createBy);
 		address.setCreateDate(new Date());
 		return addressDao.save(address);
@@ -72,6 +73,13 @@ public class AddressServiceImpl implements Serializable, AddressService {
 	@Override
 	public List<Address> findByUserId(Long rowId) {
 		return addressDao.findByUserId(rowId);
+	}
+
+	@Override
+	public Integer doDefault(Long rowId) {
+		addressDao.doDefault(rowId);
+		addressDao.doDefaultOthers(addressDao.get(rowId));
+		return 1;
 	}
 
 

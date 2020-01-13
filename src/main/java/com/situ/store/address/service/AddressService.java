@@ -23,5 +23,7 @@ public interface AddressService {
 
 	List<Address> findByUserId(Long rowId);
 
+	Integer doDefault(Long rowId);
+
 
 }

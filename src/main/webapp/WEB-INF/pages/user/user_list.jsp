@@ -22,7 +22,7 @@
 							<td>${user.userCode}</td>
 							<td>${user.userPhone}</td>
 							<td>
-								<a href="javascript:;" data-rowId="${user.rowId}" id="update">修改</a>
+								<%-- <a href="javascript:;" data-rowId="${user.rowId}" id="update">修改</a> --%>
 								<!-- data-XXX H5以后允许自定义元素的属性 -->
 								<a href="javascript:;" data-rowId="${user.rowId}" id="delete">删除</a>
 								<a href="javascript:;" data-rowId="${user.rowId}" data-lock="${user.ifLock }" id="lock">${user.ifLock==1?'锁定':'解除锁定'}</a>

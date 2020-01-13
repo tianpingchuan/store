@@ -6,7 +6,7 @@
 
 	<!-- 目录搜索 -->
 	<sql id="address_base_select">
-		SELECT ROW_ID,USER_ID,USER_NAME,PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME,AREA_CODE,AREA_NAME,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM SELECT_ADDRESS_USER WHERE ACTIVE_FLAG = 1
+		SELECT ROW_ID,USER_ID,IF_DEFAULT,USER_NAME,PROVINCE_CODE,PROVINCE_NAME,CITY_CODE,CITY_NAME,AREA_CODE,AREA_NAME,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM SELECT_ADDRESS_USER WHERE ACTIVE_FLAG = 1
 	</sql>
 
 	<select id="findAll" resultType="Address">
@@ -17,9 +17,13 @@
 		<include refid="address_base_select"/> AND USER_ID = #{userId}
 	</select>
 	
+	<select id="findDefault" resultType="Address" parameterType="Address">
+		<include refid="address_base_select"/> AND USER_ID = #{userId} AND IF_DEFAULT=0
+	</select>
+	
 	<insert id="save" parameterType="Address" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
-		INSERT INTO TB_ADDRESS (USER_ID,PROVINCE_CODE,CITY_CODE,AREA_CODE,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
-		VALUES(#{userId},#{provinceCode},#{cityCode},#{areaCode},#{trueAddress},#{postCode},#{userPhone},#{activeFlag},#{createBy},#{createDate})
+		INSERT INTO TB_ADDRESS (USER_ID,IF_DEFAULT,PROVINCE_CODE,CITY_CODE,AREA_CODE,TRUE_ADDRESS,POST_CODE,USER_PHONE,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{userId},#{ifDefault},#{provinceCode},#{cityCode},#{areaCode},#{trueAddress},#{postCode},#{userPhone},#{activeFlag},#{createBy},#{createDate})
 	</insert>
 	
 	<select id="findByPage" resultType="Address">
@@ -45,6 +49,15 @@
 	<!-- 逻辑删除 -->
 	<update id="delete" parameterType="Address" >
 		UPDATE TB_ADDRESS SET ACTIVE_FLAG=0 WHERE ROW_ID = #{rowId}
+	</update>
+	
+	<!-- 设为默认地址 -->
+	<update id="doDefault" parameterType="Address" >
+		UPDATE TB_ADDRESS SET IF_DEFAULT=0 WHERE ROW_ID = #{rowId}
+	</update>
+	<!-- 更改其他所有的地址 -->
+	<update id="doDefaultOthers" parameterType="Address" >
+		UPDATE TB_ADDRESS SET IF_DEFAULT=1 WHERE ROW_ID != #{rowId} AND USER_ID = #{userId}
 	</update>
 	
 	<select id="get" resultType="Address">

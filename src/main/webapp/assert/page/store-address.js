@@ -106,6 +106,23 @@ $(document).ready(function(){
 	 	});
 	});
 	
+//	绑定设为默认超链接事件
+	$('#dataTable_wrapper').off('click','#default').on('click','#default',function(){
+		var rowId = $(this).attr("data-rowId");
+		if (confirm("你确定设置为默认地址吗？")) {
+			$.ajax({
+				url : 'address/dodefault/' + rowId,
+				dataType : 'json',
+				success : function(result) {
+					if (result) {
+						// 调用查询table表单的数据
+						initTalbeData(1);
+					}
+				}
+			});
+		}
+	});
+	
 //	绑定搜索按钮
 	$('#button_search').on('click',function(){
 		initTalbeData(1);
