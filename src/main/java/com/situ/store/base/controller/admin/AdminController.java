@@ -54,4 +54,15 @@ public class AdminController implements Serializable {
 		}
 		return modelAndView;
 	}
+	
+	/**
+	 * @进管理首页
+	 * @param modelAndView
+	 * @return
+	 */
+	@RequestMapping("/gologin")
+	public ModelAndView goLogin(ModelAndView modelAndView) {
+		modelAndView.setViewName(ADMIN_LOGIN);
+		return modelAndView;
+	}
 }

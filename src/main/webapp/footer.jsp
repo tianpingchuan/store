@@ -360,6 +360,10 @@ if (~window.location.search.indexOf('reset=true')) {
 	</script>
 <!-- //here ends scrolling icon -->
 
+<!-- 配置拦截器 -->
+<script type="text/javascript" src="assert/page/store-ajax.js"></script>
+
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#verticalTab').easyResponsiveTabs({
@@ -384,12 +388,13 @@ if (~window.location.search.indexOf('reset=true')) {
 				url : 'cart/shopping',
 				data : data,
 				type : "POST", 
-				success : function(num) {
+				success : function(result) {
 					paypal.minicart.view.toggle();
 					paypal.minicart.reset();
+					alert("购买成功");
 				}
 			});
-			alert("购买成功");
+			
 		});
 			
 	});
