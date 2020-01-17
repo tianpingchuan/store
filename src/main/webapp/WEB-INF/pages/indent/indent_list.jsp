@@ -19,9 +19,14 @@
 			<tbody>
 				<c:if test="${!empty IndentList}">
 					<c:forEach items="${IndentList}" var="indent" varStatus="status">
-						<tr>
+						<tr id="tr${indent.indentCode}">
 							<th scope="row">${status.index+1}</th>
-							<td>${indent.indentCode}</td>
+							<td>
+								<a href="javascript:findChild('${indent.indentCode}');">
+								<i class="fa fa-chevron-right"></i>
+								</a>
+								${indent.indentCode}
+							</td>
 							<td>${indent.userName}</td>
 							<td>${indent.totalPrices}</td>
 							<td>${indent.trueAddress}</td>
@@ -47,5 +52,29 @@
 		</table>
 	</div>
 </div>
+<script type="text/javascript">
+	function findChild(indentCode) {
+		//根据id取得tr的jQuery对象
+		var $tr = $('#tr' + indentCode);
+		// 通过 tr找到有 fa这个样式的 i 
+		var $i = $tr.find('.fa');
+		//判断 如果是 右向图标，则执行 下拉数据的查询
+		if ($i.hasClass('fa-chevron-right')) {
+			$i.removeClass('fa-chevron-right').addClass('fa-chevron-down');
+			$.ajax({
+				url:'order/list/'+indentCode,
+				success : function(htmlData) {
+					console.log(htmlData);
+					$tr.after(htmlData);
+				}
+			});
+		} else {
+			//否则清空下拉列表数据
+			$i.removeClass('fa-chevron-down').addClass('fa-chevron-right');
+			$('#child' + indentCode).remove();
+		}
+
+	}
+</script>
 <%-- 引入分页 --%>
 <%@ include file="/page.jsp"%>

@@ -25,4 +25,6 @@ public interface OrderDao {
 
 	Long save(Order order);
 
+	List<Order> findByIndentCode(String indentCode);
+
 }

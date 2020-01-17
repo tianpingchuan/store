@@ -5,12 +5,12 @@
 <mapper namespace="com.situ.store.order.dao.OrderDao">
 
 	<sql id="order_base_select">
-		SELECT ROW_ID,INDENT_CODE,PRODUCT_NUM,PRODUCT_INFO,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_ORDER WHERE ACTIVE_FLAG = 1
+		SELECT ROW_ID,INDENT_CODE,PRODUCT_NUM,PRODUCT_NAME,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE FROM TB_ORDER WHERE ACTIVE_FLAG = 1
 	</sql>
 	
 	<insert id="save" parameterType="Order" useGeneratedKeys="true" keyColumn="ROW_ID" keyProperty="rowId">
-		INSERT INTO TB_ORDER (INDENT_CODE,PRODUCT_NUM,PRODUCT_INFO,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
-		VALUES(#{indentCode},#{productNum},#{productInfo},#{bayCount},#{totalPrices},#{activeFlag},#{createBy},#{createDate})
+		INSERT INTO TB_ORDER (INDENT_CODE,PRODUCT_NUM,PRODUCT_NAME,BAY_COUNT,TOTAL_PRICES,ACTIVE_FLAG,CREATE_BY,CREATE_DATE)
+		VALUES(#{indentCode},#{productNum},#{productName},#{bayCount},#{totalPrices},#{activeFlag},#{createBy},#{createDate})
 	</insert>
 	
 	<select id="findByPage" resultType="Order">
@@ -73,4 +73,7 @@
 		<include refid="order_base_select"/>
 	</select>
 	
+	<select id="findByIndentCode" resultType="Order" parameterType="Order">
+		<include refid="order_base_select"/> AND INDENT_CODE = #{indentCode}
+	</select>
 </mapper>

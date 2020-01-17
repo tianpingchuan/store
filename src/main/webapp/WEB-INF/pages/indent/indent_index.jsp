@@ -4,7 +4,7 @@
 <div class="card mb-3">
 	<div class="card-header">
 		<i class="fas fa-table"></i> 订单管理
-		<button type="button" class="btn btn-info btn-sm float-right" id="button_add">新增</button>
+		<!-- <button type="button" class="btn btn-info btn-sm float-right" id="button_add">新增</button> -->
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -64,13 +64,13 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">订单编号</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control validate[required,ajax[checkIndentCode]]" id="indentCode" name="indentCode">
+							<input type="text" class="form-control validate[required,ajax[checkIndentCode]]" id="indentCode" name="indentCode" disabled="disabled">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">用户名称</label>
 						<div class="col-sm-7">
-							<select class="form-control" name="userId" id="userId">
+							<select class="form-control" name="userId" id="userId" disabled="disabled">
 								<c:if test="${!empty userIndentList}">
 									<c:forEach items="${userIndentList}" var="user">
 										<option value="${user.rowId}">${user.userName}</option>	
@@ -82,13 +82,13 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">总价</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control validate[required,custom[number],min[0]]" id="totalPrices" name="totalPrices">
+							<input type="text" class="form-control validate[required,custom[number],min[0]]" id="totalPrices" name="totalPrices" disabled="disabled">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">收货地址</label>
 						<div class="col-sm-7">
-							<select class="form-control" name="addressId" id="addressId">
+							<select class="form-control" name="addressId" id="addressId" disabled="disabled">
 								<c:if test="${!empty addressIndentList}">
 									<c:forEach items="${addressIndentList}" var="address">
 										<option value="${address.rowId}">${address.trueAddress}</option>	
@@ -110,7 +110,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">支付方式</label>
 						<div class="col-sm-7">
-							<select class="form-control" name="payWay" id="payWay">
+							<select class="form-control" name="payWay" id="payWay" disabled="disabled">
 								<option value="1">支付宝</option>
 								<option value="2">银行卡</option>
 								<option value="3">微信</option>

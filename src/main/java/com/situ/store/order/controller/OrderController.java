@@ -116,4 +116,18 @@ public class OrderController implements Serializable {
 	public Integer doDelete(@PathVariable("rowId")Long rowId) {
 		return orderService.doDelete(rowId);
 	}
+	
+	/**
+	 * 跳转到用户订单列表
+	 * @param rowId
+	 * @return
+	 */
+	@RequestMapping("/list/{indentCode}")
+	public ModelAndView findlist(ModelAndView modelAndView,@PathVariable("indentCode")String indentCode) {
+		System.out.println("进入controller");
+		modelAndView.addObject("indentOrderList", orderService.findByIndentCode(indentCode));
+		modelAndView.addObject("indentCode", indentCode);
+		modelAndView.setViewName("indent/order_indent_list");
+		return modelAndView;
+	}
 }

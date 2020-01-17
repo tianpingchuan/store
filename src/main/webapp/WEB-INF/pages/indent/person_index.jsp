@@ -4,7 +4,7 @@
 <div class="card mb-3">
 	<div class="card-header">
 		<i class="fas fa-table"></i> 订单管理
-		<button type="button" class="btn btn-info btn-sm float-right" id="button_add">新增</button>
+		<!-- <button type="button" class="btn btn-info btn-sm float-right" id="button_add">新增</button> -->
 	</div>
 	<div class="card-body">
 		<div class="table-responsive">
@@ -57,7 +57,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">订单编号</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control validate[required,ajax[checkIndentCode]]" id="indentCode" name="indentCode">
+							<input type="text" class="form-control validate[required,ajax[checkIndentCode]]" id="indentCode" name="indentCode" disabled="disabled">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -69,7 +69,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">总价</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control validate[required,custom[number],min[0]]" id="totalPrices" name="totalPrices">
+							<input type="text" class="form-control validate[required,custom[number],min[0]]" id="totalPrices" name="totalPrices" disabled="disabled">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -87,7 +87,11 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">订单状态</label>
 						<div class="col-sm-7">
-							<input type="hidden" class="form-control" name="indentState" id="indentState" value="0"/>未发货
+							<select class="form-control" name="indentState" id="indentState" disabled="disabled">
+									<option value="0">未发货</option>
+									<option value="1">发货</option>
+									<option value="2">收货</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">

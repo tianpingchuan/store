@@ -141,18 +141,5 @@ public class IndentController implements Serializable {
 		return modelAndView;
 	}
 	
-	/**
-	 * 跳转到用户订单页
-	 * @param rowId
-	 * @return
-	 */
-	@RequestMapping("/list/{indentCode}")
-	public ModelAndView findlist(ModelAndView modelAndView,@PathVariable("indentCode")String indentCode) {
-		System.out.println("进入controller");
-		modelAndView.addObject("indentOrderList", indentService.findByIndentCode(indentCode));
-		modelAndView.addObject("indentCode", indentCode);
-		modelAndView.setViewName("order/order_indent_list");
-		return modelAndView;
-	}
 	
 }

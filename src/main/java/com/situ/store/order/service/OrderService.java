@@ -25,4 +25,6 @@ public interface OrderService {
 
 	Long addOrder(User user, List<Items> list);
 
+	List<Order> findByIndentCode(String indentCode);
+
 }

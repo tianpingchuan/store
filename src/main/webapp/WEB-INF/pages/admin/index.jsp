@@ -94,8 +94,8 @@
 			<li class="nav-item"><a class="nav-link" href="product/index"> <i class="fas fa-fw fa-table"></i> <span>商品管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="address/index"> <i class="fas fa-fw fa-chart-area"></i> <span>地址管理</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="indent/index"> <i class="fas fa-fw fa-chart-area"></i> <span>订单管理</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="order/index"> <i class="fas fa-fw fa-chart-area"></i> <span>订单列表管理</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="cart/index"> <i class="fas fa-fw fa-chart-area"></i> <span>购物车管理</span></a></li>
+			<!-- <li class="nav-item"><a class="nav-link" href="order/index"> <i class="fas fa-fw fa-chart-area"></i> <span>订单列表管理</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="cart/index"> <i class="fas fa-fw fa-chart-area"></i> <span>购物车管理</span></a></li> -->
 		</ul>
 		<!-- 左侧 菜单结束  -->
 		<!-- 主页面开始  -->

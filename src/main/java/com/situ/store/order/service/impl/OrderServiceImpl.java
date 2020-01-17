@@ -89,56 +89,104 @@ public class OrderServiceImpl implements OrderService, Serializable {
 	 * 保存订单信息
 	 */
 	public Long addOrder(User user, List<Items> list) {
-		Order order = new Order();//new一个订单列表的实例
+		Indent indent = new Indent();//new一个订单实例
 		String uuid = UUID.randomUUID().toString();//生成一个订单编号
-		String productNum = "";//商品编号
-		String productInfo = "";//商品购买信息：商品-数量
-		Integer bayCount = 0;//购买商品总数量
+		indent.setIndentCode(uuid);
 		Long totalPrices = 0L;//购买商品总价
 		for(Items items:list) {//遍历list集合，将每个商品信息取出
-			Indent indent = new Indent();//每次循环创建一个订单实例
+			Order order = new Order();//new一个订单列表的实例
+			order.setIndentCode(uuid);
 			String item_name = items.getItem_name();//商品的名字
 //			通过商品名称查询商品信息
 			Product product = productDao.getByName(item_name);
-			Integer productPrice = product.getProductPrice();//商品的单价
-			productNum += product.getRowId()+"-";
+			order.setProductNum(product.getProductNum());
+			order.setProductName(product.getProductName());
 			Integer quantity = items.getQuantity();//购买的数量
-			productInfo += product.getProductName()+"-"+quantity+";";
-			bayCount += quantity;
+			order.setBayCount(quantity);
+			Integer productPrice = product.getProductPrice();//商品的单价
 			Long price =(long) productPrice * quantity;
 			totalPrices += price;
-			
-//			查询用户的默认地址信息
-//			List<Address> addressList = addressDao.findByUserId(user.getRowId());
-			Address address = addressDao.findDefault(user.getRowId());
-			
-			indent.setIndentCode(uuid);
-			indent.setUserId(user.getRowId());
-			indent.setTotalPrices(price);
-			if(address != null) {//判断查询地址是否为空，不为空将第一个地址的id赋给订单地址
-				indent.setAddressId(address.getRowId());
-			} else {
-				indent.setAddressId(null);
-			}
-			indent.setIndentState(0);//订单状态为未发货
-			indent.setPayWay(1);//支付方式默认支付宝
-			indent.setActiveFlag(1);
-			indent.setCreateBy(user.getUserCode());
-			indent.setCreateDate(new Date());
-			indentDao.save(indent);
+			order.setTotalPrices(price);
+			order.setActiveFlag(1);
+			order.setCreateBy(user.getUserCode());
+			order.setCreateDate(new Date());
+			orderDao.save(order);
 		}
-		order.setIndentCode(uuid);
-		order.setProductNum(productNum);
-		order.setProductInfo(productInfo);
-		order.setBayCount(bayCount);
-		order.setTotalPrices(totalPrices);
-		order.setActiveFlag(1);
-		order.setCreateBy(user.getUserCode());
-		order.setCreateDate(new Date());
-		orderDao.save(order);
+		indent.setUserId(user.getRowId());
+		indent.setTotalPrices(totalPrices);
+//		查询用户的默认地址信息
+		Address address = addressDao.findDefault(user.getRowId());
+		if(address != null) {//判断查询地址是否为空，不为空将第一个地址的id赋给订单地址
+			indent.setAddressId(address.getRowId());
+		} else {
+			indent.setAddressId(null);
+		}
+		indent.setIndentState(0);//订单状态为未发货
+		indent.setPayWay(1);//支付方式默认支付宝
+		indent.setActiveFlag(1);
+		indent.setCreateBy(user.getUserCode());
+		indent.setCreateDate(new Date());
+		indentDao.save(indent);
+		
+		
+		
+//		Order order = new Order();//new一个订单列表的实例
+//		String uuid = UUID.randomUUID().toString();//生成一个订单编号
+//		String productNum = "";//商品编号
+//		String productInfo = "";//商品购买信息：商品-数量
+//		Integer bayCount = 0;//购买商品总数量
+//		Long totalPrices = 0L;//购买商品总价
+//		for(Items items:list) {//遍历list集合，将每个商品信息取出
+//			Indent indent = new Indent();//每次循环创建一个订单实例
+//			String item_name = items.getItem_name();//商品的名字
+////			通过商品名称查询商品信息
+//			Product product = productDao.getByName(item_name);
+//			Integer productPrice = product.getProductPrice();//商品的单价
+//			productNum += product.getRowId()+"-";
+//			Integer quantity = items.getQuantity();//购买的数量
+//			productInfo += product.getProductName()+"-"+quantity+";";
+//			bayCount += quantity;
+//			Long price =(long) productPrice * quantity;
+//			totalPrices += price;
+//			
+////			查询用户的默认地址信息
+////			List<Address> addressList = addressDao.findByUserId(user.getRowId());
+//			Address address = addressDao.findDefault(user.getRowId());
+//			
+//			indent.setIndentCode(uuid);
+//			indent.setUserId(user.getRowId());
+//			indent.setTotalPrices(price);
+//			if(address != null) {//判断查询地址是否为空，不为空将第一个地址的id赋给订单地址
+//				indent.setAddressId(address.getRowId());
+//			} else {
+//				indent.setAddressId(null);
+//			}
+//			indent.setIndentState(0);//订单状态为未发货
+//			indent.setPayWay(1);//支付方式默认支付宝
+//			indent.setActiveFlag(1);
+//			indent.setCreateBy(user.getUserCode());
+//			indent.setCreateDate(new Date());
+//			indentDao.save(indent);
+//		}
+//		order.setIndentCode(uuid);
+//		order.setProductNum(productNum);
+//		order.setProductInfo(productInfo);
+//		order.setBayCount(bayCount);
+//		order.setTotalPrices(totalPrices);
+//		order.setActiveFlag(1);
+//		order.setCreateBy(user.getUserCode());
+//		order.setCreateDate(new Date());
+//		orderDao.save(order);
 		
 		
 		return 1L;
+	}
+
+	
+	
+	@Override
+	public List<Order> findByIndentCode(String indentCode) {
+		return orderDao.findByIndentCode(indentCode);
 	}
 
 
